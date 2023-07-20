@@ -34,6 +34,15 @@ app.get('/info', (request, response) => {
     <p>${Date()}</p>`)
 })
 
+app.get('/api/persons/:id', (request, response) => {
+    const id = Number(request.params.id)
+    const person = persons.find( p => p.id === id)
+    if(person){
+        return response.json(person)
+    }
+    response.status(404).send(`Person with id '${id}' not available`)
+})
+
 const PORT = 3001
 app.listen(PORT, () => {
     console.log('Server listening to PORT ', PORT)
