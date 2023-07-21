@@ -1,6 +1,13 @@
 const express = require('express')
+const morgan = require('morgan')
 const app = express()
+
 app.use(express.json())
+
+morgan.token('body', (request) => {
+    return JSON.stringify(request.body)
+})
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
 
 let persons = [
     { 
@@ -68,10 +75,6 @@ app.post('/api/persons', (request, response) => {
             errorMessage = 'name must be unique'
         }
     }
-    console.log(error)
-    console.log(errorMessage);
-    console.log(newPerson);
-    console.log(persons)
     if(error){
         return response.status(400).json({
             error: errorMessage
@@ -83,7 +86,7 @@ app.post('/api/persons', (request, response) => {
     response.json(newPerson)
 })
 
-const PORT = 3001
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
     console.log('Server listening to PORT ', PORT)
 })
