@@ -5,7 +5,7 @@ const Person = require('./models/Person')
 const argvLength = process.argv.length
 // const args = process.argv
 // if(argvLength < 3){
-//     console.log('give password as argument');
+//     console.log('give password as argument')
 //     process.exit(1)
 // }
 
@@ -21,11 +21,11 @@ const argvLength = process.argv.length
 // })
 
 // const Person = mongoose.model('Person', personSchema)
-if(argvLength == 2){
-    console.log('phonebook:');
+if(argvLength === 2){
+    console.log('phonebook:')
     Person.find({}).then(result => {
         result.forEach( person => {
-            console.log(`${person.name} ${person.number}`);
+            console.log(`${person.name} ${person.number}`)
         })
         mongoose.connection.close()
     })
@@ -37,7 +37,7 @@ if(argvLength == 2){
 //     })
 
 //     person.save().then(result => {
-//         console.log(`added ${result.name} number ${result.number} to phonebook`);
+//         console.log(`added ${result.name} number ${result.number} to phonebook`)
 //         mongoose.connection.close()
 //     })
 // }

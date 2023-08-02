@@ -32,15 +32,16 @@ app.get('/api/persons/:id', (request, response, next) => {
     Person.findById(request.params.id)
         .then(result => {
             if(result) {
-                return repsonse.json(result)
+                return response.json(result)
             }
             return response.status(404).send(`Person with id ${request.params.id} not available`)
         })
         .catch(error => next(error))
 })
 
-app.delete('/api/persons/:id', (request, response, next) => {    
+app.delete('/api/persons/:id', (request, response, next) => {
     Person.findByIdAndRemove(request.params.id)
+        // eslint-disable-next-line no-unused-vars
         .then(result => {
             response.status(204).end()
         })
@@ -56,16 +57,16 @@ app.post('/api/persons', (request, response, next) => {
         number: body.number
     })
     newPerson.save()
-        .then(result =>{
+        .then(result => {
             response.json(result)
         })
         .catch(error => next(error))
 })
 
-app.put('/api/persons/:id', (request, response, next) => {
-    Person.findByIdAndUpdate(request.params.id, {number: request.body.number}, {new: true, runValidators: true})
+app.put('/api/persons/:id', (request, response, next ) => {
+    Person.findByIdAndUpdate(request.params.id, { number: request.body.number }, { new: true, runValidators: true })
         .then(result => {
-            console.log(result);
+            console.log(result)
             return response.json(result)
         })
         .catch(error => next(error))
@@ -77,12 +78,12 @@ app.listen(PORT, () => {
 })
 
 const errorHandler = (error, request, response, next) => {
-    console.log(error);
+    console.log(error)
     if(error.name === 'CastError'){
-        return response.status(400).send({error: 'malformatted id'})
+        return response.status(400).send({ error: 'malformatted id' })
     }
     else if(error.name === 'ValidationError'){
-        return response.status(400).send({error: error})
+        return response.status(400).send({ error: error })
     }
     next(error)
 }

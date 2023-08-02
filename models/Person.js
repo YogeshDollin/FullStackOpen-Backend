@@ -2,13 +2,14 @@ const mongoose = require('mongoose')
 mongoose.set('strictQuery', false)
 
 const url = process.env.MONGODB_URI
-console.log('connecting to ', url);
+console.log('connecting to ', url)
 
+// eslint-disable-next-line no-unused-vars
 mongoose.connect(url).then(result => {
-    console.log('connected to mongodb');
+    console.log('connected to mongodb')
 })
 .catch(error => {
-    console.log('failed to connect to mongodb. Error: ', error.message);
+    console.log('failed to connect to mongodb. Error: ', error.message)
 })
 
 const personSchema = new mongoose.Schema({
@@ -20,8 +21,8 @@ const personSchema = new mongoose.Schema({
         type: String,
         validate: {
             validator: function(v) {
-                console.log(v);
-                console.log('regex testing: ', /(\d{2}-\d{6,})|(\d{3}-\d{5,})/.test(v));
+                console.log(v)
+                console.log('regex testing: ', /(\d{2}-\d{6,})|(\d{3}-\d{5,})/.test(v))
                 return /(\d{2}-\d{6,})|(\d{3}-\d{5,})/.test(v)
             },
             message: props => `${props.value} is not valid phone number`
